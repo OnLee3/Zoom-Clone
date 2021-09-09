@@ -11,7 +11,10 @@ html(lang="en")
             h1 ZZom
         main
             ul
-            form
+            form#nick
+                input(type="text", placeholder="choose a nickname.", required)
+                button Save 
+            form#message
                 input(type="text", placeholder="write a message.", required)
                 button Send 
         script(src="/public/js/app.js")
