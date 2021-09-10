@@ -1,7 +1,8 @@
 const socket = io();
 
 const welcome = document.getElementById("welcome");
-const form = welcome.querySelector("form");
+const enterForm = welcome.querySelector("#enter");
+const nameForm = welcome.querySelector("#name");
 const room = document.getElementById("room");
 
 room.hidden = true;
@@ -19,7 +20,7 @@ function handleMessageSubmit (event) {
     event.preventDefault();
     const input = room.querySelector("#msg input");
     const value = input.value;
-    socket.emit("new_message", input.value, roomName, () => {
+    socket.emit("new_message", value, roomName, () => {
         addMessage(`You : ${value}`);
     });
     input.value = "";
@@ -27,9 +28,13 @@ function handleMessageSubmit (event) {
 
 function handleNicknameSubmit (event) {
     event.preventDefault();
-    const input = room.querySelector("#name input");
+    nameForm.hidden= true;
+    const input = welcome.querySelector("#name input");
     const value = input.value;
-    socket.emit("nickname", input.value, roomName);
+    socket.emit("nickname", value, () => {
+        const h3 = document.getElementById("nickname");
+        h3.innerText = `Your name : ${value}`;
+    });
     input.value = "";
 }
 
@@ -39,21 +44,19 @@ function showRoom(){
     const h3 = room.querySelector("h3");
     h3.innerText = `Room ${roomName}`
     const msgForm = room.querySelector("#msg");
-    const nameForm = room.querySelector("#name");
     msgForm.addEventListener("submit", handleMessageSubmit);
-    nameForm.addEventListener("submit", handleNicknameSubmit);
-    
 }
 
 function handleRoomSubmit(event){
     event.preventDefault();
-    const input = form.querySelector("input");
+    const input = enterForm.querySelector("input");
     socket.emit("enter_room", input.value, showRoom);
     roomName = input.value;
     input.value = "";
 }
 
-form.addEventListener("submit", handleRoomSubmit);
+enterForm.addEventListener("submit", handleRoomSubmit);
+nameForm.addEventListener("submit", handleNicknameSubmit);   
 
 socket.on("welcome", (user) => {
     addMessage(`${user} Joined!`)

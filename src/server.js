@@ -33,7 +33,10 @@ wsServer.on("connection", (socket) => {
         socket.to(room).emit("new_message", `${socket.nickname} : ${msg}`);
         done();
     })
-    socket.on("nickname", (nickname) => socket["nickname"] = nickname)
+    socket.on("nickname", (nickname, done) => {
+        socket["nickname"] = nickname
+        done();
+    })
 })
 
 httpServer.listen(PORT, handleListen);
