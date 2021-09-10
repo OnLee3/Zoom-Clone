@@ -39,7 +39,7 @@ function handleNicknameSubmit (event) {
 }
 
 function showRoom(){
-    welcome.hidden = true;
+    enterForm.hidden = true;
     room.hidden = false;
     const h3 = room.querySelector("h3");
     h3.innerText = `Room ${roomName}`
@@ -67,3 +67,17 @@ socket.on("bye", (left) => {
 })
 
 socket.on("new_message", addMessage)
+socket.on("room_change", (rooms) => {
+    const roomList = welcome.querySelector("ul");
+    roomList.innerHTML = "";
+    if(rooms.length === 0){    
+        return;
+    }
+    rooms.forEach(room => {
+        console.log("it works")
+        const li = document.createElement("li");
+        li.innerText = room;
+        roomList.append(li);
+    })
+});
+// same ::: socket.on("room_change", (msg) => console.log(msg));
