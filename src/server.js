@@ -1,7 +1,6 @@
 import http from "http"
 import SocketIO from "socket.io"
 import express from "express"
-import { parse } from "path";
 
 const app = express();
 
@@ -18,13 +17,15 @@ const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
 wsServer.on("connection", (socket) => {
-    socket.on("enter_room", (msg, done) => {
-        console.log(msg);
-        setTimeout(() => {
-            done()
-        }, 10000)
+    socket.on("enter_room", (roomName, done) => {
+        console.log(roomName);
+        setTimeout(() =>  {
+            done("hello from the backend");
+        }, 15000)
     });
 })
+
+httpServer.listen(PORT, handleListen);
 
 // const wss = new WebSocket.Server({server});
 
@@ -47,5 +48,3 @@ wsServer.on("connection", (socket) => {
 //         }
 //     });
 // });
-
-httpServer.listen(PORT, handleListen);
