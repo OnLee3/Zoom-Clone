@@ -1,6 +1,7 @@
 import http from "http"
-import SocketIO from "socket.io"
+import { Server } from "socket.io"
 import express from "express"
+import { instrument } from "@socket.io/admin-ui"
 
 const app = express();
 
@@ -14,7 +15,17 @@ const PORT = 4000;
 const handleListen = () => console.log(`Server Listening on http://localhost:${PORT}.`)
 
 const httpServer = http.createServer(app);
-const wsServer = SocketIO(httpServer);
+const wsServer = new Server(httpServer, {
+    // 데모가 작동하는데 필요한 환경설정
+    cors: {
+        origin: ["https://admin.socket.io"],
+        credentials: true,
+        },
+    });
+    
+    instrument(wsServer, {
+    auth: false,
+    });
 
 function publicRooms(){
     const {
