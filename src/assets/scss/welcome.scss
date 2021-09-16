@@ -1,0 +1,47 @@
+#welcome {
+  h1 {
+    color: whitesmoke;
+    font-size: 112px;
+    font-weight: bold;
+    text-shadow: whitesmoke 1px 0 1px;
+    margin-bottom: 20px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    input {
+      text-align: center;
+    }
+    button {
+      all: unset;
+      padding: 15px 20px;
+      border-radius: 25px;
+      background-color: rgb(55, 55, 255);
+      font-size: 18px;
+      text-align: center;
+      cursor: pointer;
+      span {
+        color: whitesmoke;
+      }
+      i {
+        opacity: 0.5;
+      }
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+}
+
+#bg-image {
+  z-index: -1;
+  max-height: 100%;
+  min-width: 100%;
+  height: auto;
+  width: auto;
+
+  object-fit: cover;
+  position: absolute;
+
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}

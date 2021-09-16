@@ -16,12 +16,14 @@ html(lang="en")
                     i.fas.fa-video.fa-lg
                     span Enter Room
         div#call
-            div#myStream
-                video#myFace(autoplay, playsinline, width="400", height="400", controls)
-                button#mute Mute
-                button#camera Turn Camera Off
-                select#cameras
-                    option test
-            video#peerFace(autoplay, playsinline, width="400", height="400", controls)
+            div#stream
+                video#peerFace(autoplay, playsinline, controls)
+                video#myFace(autoplay, playsinline)
+                div#controlBox
+                    button#mute Mute
+                    button#camera Turn Camera Off
+                    select#cameras
+                        option test
+            div#chat
         script(src="/socket.io/socket.io.js")
         script(src="/public/js/app.js")
