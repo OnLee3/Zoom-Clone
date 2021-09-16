@@ -20,8 +20,12 @@ html(lang="en")
                 video#peerFace(autoplay, playsinline, controls)
                 video#myFace(autoplay, playsinline)
                 div#controlBox
-                    button#mute Mute
-                    button#camera Turn Camera Off
+                    div#camera.iconBox
+                        button.fas.fa-video.fa-lg
+                        span Cam
+                    div#mute.iconBox
+                        button.fas.fa-microphone.fa-lg
+                        span Mic
                     select#cameras
                         option test
             div#chat

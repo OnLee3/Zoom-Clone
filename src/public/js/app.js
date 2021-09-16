@@ -58,12 +58,13 @@ async function getMedia(deviceId) {
 }
 
 function handleMuteClick(){
+    const i = muteBtn.querySelector("button");
     myStream.getAudioTracks().forEach((track) => (track.enabled = !track.enabled));
     if(!muted){
-        muteBtn.innerText = "Unmute";
+        i.classList = "fas fa-microphone-slash lg";
         muted = true;
     } else {
-        muteBtn.innerText = "Mute";
+        i.classList = "fas fa-microphone lg";
         muted = false;
     }
 }
