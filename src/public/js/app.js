@@ -12,7 +12,7 @@ call.hidden=true;
 let myStream;
 let muted = false;
 let cameraOff = false;
-let roomName;
+let roomName = "TheChosenOne";
 let myPeerConnection;
 let myDataChannel;
 
@@ -106,11 +106,8 @@ async function initCall(){
 
 async function handleWelcomeSubmit(event){
     event.preventDefault();
-    const input = welcomeForm.querySelector("input");
     await initCall();
-    socket.emit("join_room", input.value);
-    roomName = input.value;
-    input.value = "";
+    socket.emit("join_room", roomName);
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit);
