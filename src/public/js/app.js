@@ -118,6 +118,7 @@ function paintChat(message, user){
 const li = document.createElement("li");
 li.innerText = `${user} : ${message}`;
 chats.appendChild(li);
+console.log(myPeerConnection.connectionState)
 }
 
 // Socket Code
@@ -157,6 +158,8 @@ socket.on("ice", (ice) => {
     myPeerConnection.addIceCandidate(ice)
 })
 
+
+
 // RTC Code
 
 function makeConnection(){
@@ -176,6 +179,7 @@ function makeConnection(){
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
     myStream.getTracks().forEach((track) => myPeerConnection.addTrack(track, myStream));
+    socket.on("leave", (event) => paintChat("Opposite exit!", ""))
 }
 
 function handleIce(data){
