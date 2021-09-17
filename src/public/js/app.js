@@ -4,7 +4,7 @@ const myFace = document.getElementById("myFace");
 const muteBtn = document.getElementById("mute");
 const cameraBtn = document.getElementById("camera");
 const camerasSelect = document.getElementById("cameras");
-
+camerasSelect.hidden = true;
 const call = document.getElementById("call");
 
 call.hidden=true;
@@ -61,21 +61,22 @@ function handleMuteClick(){
     const i = muteBtn.querySelector("button");
     myStream.getAudioTracks().forEach((track) => (track.enabled = !track.enabled));
     if(!muted){
-        i.classList = "fas fa-microphone-slash lg";
+        i.classList = "fas fa-microphone-slash fa-lg";
         muted = true;
     } else {
-        i.classList = "fas fa-microphone lg";
+        i.classList = "fas fa-microphone fa-lg";
         muted = false;
     }
 }
 
 function handleCameraClick(){
+    const i = cameraBtn.querySelector("button");
     myStream.getVideoTracks().forEach((track) => (track.enabled = !track.enabled));
     if(cameraOff){
-        cameraBtn.innerText = "Turn Camera Off";
+        i.classList = "fas fa-video fa-lg";
         cameraOff = false;
     } else {
-        cameraBtn.innerText = "Turn Camera On";
+        i.classList = "fas fa-video-slash fa-lg";
         cameraOff = true;
     }
 }
@@ -113,12 +114,18 @@ async function handleWelcomeSubmit(event){
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 
+function paintChat(message, user){
+const li = document.createElement("li");
+li.innerText = `${user} : ${message}`;
+chats.appendChild(li);
+}
+
 // Socket Code
 
 // Peer A
 socket.on("welcome", async () => {
     myDataChannel = myPeerConnection.createDataChannel("chat");
-    myDataChannel.addEventListener("message", console.log);
+    myDataChannel.addEventListener("message", (message) => paintChat(message.data, "Opponent"));
     console.log("made data channel");
     const offer = await myPeerConnection.createOffer();
     myPeerConnection.setLocalDescription(offer);
@@ -135,7 +142,7 @@ socket.on("answer", (answer) => {
 socket.on("offer", async (offer) => {
     myPeerConnection.addEventListener("datachannel", (event) => {
         myDataChannel = event.channel;
-        myDataChannel.addEventListener("message", console.log);
+        myDataChannel.addEventListener("message", (message) => paintChat(message.data, "Opponent"));
     })
     console.log("received the offer")
     myPeerConnection.setRemoteDescription(offer);
@@ -180,3 +187,16 @@ function handleAddStream(data){
     const peerFace = document.getElementById("peerFace");
     peerFace.srcObject = data.stream;
 }
+
+const chatForm = document.querySelector("#chat form");
+const chatInput = chatForm.querySelector("input");
+const chats = document.getElementById("chats");
+
+function handleChatSubmit(event) {
+    event.preventDefault();
+    myDataChannel.send(chatInput.value);
+    paintChat(chatInput.value, "You");
+    chatInput.value ="";
+}
+
+chatForm.addEventListener("submit", handleChatSubmit);
