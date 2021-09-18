@@ -4,9 +4,9 @@ const myFace = document.getElementById("myFace");
 const muteBtn = document.getElementById("mute");
 const cameraBtn = document.getElementById("camera");
 const camerasSelect = document.getElementById("cameras");
-camerasSelect.hidden = true;
 const call = document.getElementById("call");
 
+//camerasSelect.hidden = true;
 call.hidden=true;
 
 let myStream;
@@ -15,6 +15,8 @@ let cameraOff = false;
 let roomName = "TheChosenOne";
 let myPeerConnection;
 let myDataChannel;
+
+// mute, cam control
 
 async function getCameras(){
     try{
@@ -98,6 +100,7 @@ camerasSelect.addEventListener("input", handleCameraChange);
 
 const welcome = document.getElementById("welcome");
 const welcomeForm = welcome.querySelector("form");
+welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 
 async function initCall(){
     welcome.hidden = true;
@@ -107,24 +110,18 @@ async function initCall(){
 }
 
 async function handleWelcomeSubmit(event){
+    console.log("it works??")
     event.preventDefault();
     await initCall();
     socket.emit("join_room", roomName);
-}
-
-welcomeForm.addEventListener("submit", handleWelcomeSubmit);
-
-function paintChat(message, user){
-const li = document.createElement("li");
-li.innerText = `${user} : ${message}`;
-chats.appendChild(li);
-console.log(myPeerConnection.connectionState)
 }
 
 // Socket Code
 
 // Peer A
 socket.on("welcome", async () => {
+    if(myPeerConnection === null) makeConnection();
+    paintChat("Opposite come in!","alert")
     myDataChannel = myPeerConnection.createDataChannel("chat");
     myDataChannel.addEventListener("message", (message) => paintChat(message.data, "Opponent"));
     console.log("made data channel");
@@ -158,28 +155,35 @@ socket.on("ice", (ice) => {
     myPeerConnection.addIceCandidate(ice)
 })
 
+socket.on("leave", (alert) => {
+    myPeerConnection.close();
+    myPeerConnection=null;
+    myDataChannel=null;
+    paintChat("Opposite exit!", "alert")
+})
 
 
 // RTC Code
 
 function makeConnection(){
-    myPeerConnection = new RTCPeerConnection({
-        iceServers: [
-          {
-            urls: [
-              "stun:stun.l.google.com:19302",
-              "stun:stun1.l.google.com:19302",
-              "stun:stun2.l.google.com:19302",
-              "stun:stun3.l.google.com:19302",
-              "stun:stun4.l.google.com:19302",
-            ],
-          },
-        ],
-      });
+    myPeerConnection = new RTCPeerConnection();
+    // STUN SERVER
+    // myPeerConnection = new RTCPeerConnection({
+    //     iceServers: [
+    //       {
+    //         urls: [
+    //           "stun:stun.l.google.com:19302",
+    //           "stun:stun1.l.google.com:19302",
+    //           "stun:stun2.l.google.com:19302",
+    //           "stun:stun3.l.google.com:19302",
+    //           "stun:stun4.l.google.com:19302",
+    //         ],
+    //       },
+    //     ],
+    //   });
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
     myStream.getTracks().forEach((track) => myPeerConnection.addTrack(track, myStream));
-    socket.on("leave", (event) => paintChat("Opposite exit!", ""))
 }
 
 function handleIce(data){
@@ -202,5 +206,11 @@ function handleChatSubmit(event) {
     paintChat(chatInput.value, "You");
     chatInput.value ="";
 }
+
+function paintChat(message, user){
+    const li = document.createElement("li");
+    li.innerText = (user !== "alert" ) ?  `${user} : ${message}` : message;
+    chats.appendChild(li);
+    }
 
 chatForm.addEventListener("submit", handleChatSubmit);

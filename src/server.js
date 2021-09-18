@@ -1,7 +1,6 @@
 import http from "http"
 import SocketIO from "socket.io"
 import express from "express"
-import { instrument } from "@socket.io/admin-ui"
 
 const app = express();
 
@@ -9,7 +8,7 @@ app.set("view engine", "pug");
 app.set("views", __dirname + "/views");
 app.use("/public", express.static(__dirname + "/public"))
 app.get("/", (req, res) => res.render("home"));
-//app.get("/*", (req, res) => res.redirect("/"));
+app.get("/*", (req, res) => res.redirect("/"));
 
 const PORT = 4000;
 const handleListen = () => console.log(`Server Listening on http://localhost:${PORT}.`)
@@ -21,6 +20,9 @@ wsServer.on("connection", (socket) => {
     socket.on("join_room", (roomName) => {
         socket.join(roomName);
         socket.to(roomName).emit("welcome");
+        socket.on("disconnect", (alert) => {
+            socket.to(roomName).emit("leave", alert);
+        })
     })
     socket.on("offer", (offer, roomName) => {
         socket.to(roomName).emit("offer", offer);
@@ -31,9 +33,7 @@ wsServer.on("connection", (socket) => {
     socket.on("ice", (ice, roomName) => {
         socket.to(roomName).emit("ice", ice);
     })
-    socket.on("disconnect", (event) => {
-        wsServer.sockets.emit("leave", event);
-    })
+
 })
 
 httpServer.listen(PORT, handleListen);
