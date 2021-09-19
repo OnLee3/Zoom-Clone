@@ -19,15 +19,101 @@
 #chat {
   width: 30%;
   margin: 2%;
+  padding: 2%;
   margin-left: 0px;
   background-color: rgb(215, 220, 233);
   border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  #chats {
+    width: 100%;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    -ms-overflow-style: none; // IE에서 스크롤바 감춤
+    &::-webkit-scrollbar {
+      display: none !important; // 윈도우 크롬 등
+    }
+    .chatBox {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+
+      li {
+        width: 90%;
+        height: 4vmin;
+        background-color: whitesmoke;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        overflow: scroll;
+        &::-webkit-scrollbar {
+          display: none !important; // 윈도우 크롬 등
+        }
+      }
+      li.you {
+        border-radius: 20px 20px 0px 20px;
+      }
+      .youIcon,
+      .opponentIcon {
+        width: 4vmin;
+        height: 4vmin;
+        background-color: whitesmoke;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .opponentIcon {
+        background-color: black;
+      }
+
+      li.opponent {
+        border-radius: 20px 20px 20px 0px;
+      }
+      li.alert {
+      }
+    }
+  }
+  form {
+    width: 100%;
+    height: 8vmin;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+    input {
+      background-color: whitesmoke;
+      width: 80%;
+      height: 4vmin;
+      border-radius: 10px;
+      text-align: center;
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      border-radius: 5px;
+      height: 4vmin;
+    }
+  }
 }
 
 #peerFace {
   border-radius: 40px;
-  min-height: 70%;
-  max-height: 80%;
+  min-height: 85%;
+  max-height: 90%;
   min-width: 100%;
   margin-bottom: 2%;
 }
@@ -44,7 +130,7 @@
 }
 
 #controlBox {
-  min-height: 20%;
+  min-height: 10%;
   background-color: rgb(215, 220, 233);
   border-radius: 40px;
   display: flex;
@@ -53,23 +139,23 @@
   .iconBox {
     display: flex;
     flex-direction: column;
-    text-align: center;
+    justify-content: center;
     align-items: center;
     button {
-      width: 8vmin;
-      height: 8vmin;
+      width: 6vmin;
+      height: 6vmin;
       border-radius: 50%;
-      margin-bottom: 15px;
+      margin-bottom: 5px;
     }
   }
   #cameras {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 8vmin;
-    height: 8vmin;
+    width: 6vmin;
+    height: 6vmin;
     border-radius: 50%;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     text-align: center;
     border: 1.5px solid black;
     background-color: whitesmoke;
