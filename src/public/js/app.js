@@ -110,7 +110,6 @@ async function initCall(){
 }
 
 async function handleWelcomeSubmit(event){
-    console.log("it works??")
     event.preventDefault();
     await initCall();
     socket.emit("join_room", roomName);
@@ -202,15 +201,41 @@ const chats = document.getElementById("chats");
 
 function handleChatSubmit(event) {
     event.preventDefault();
+    if(chatInput.value !== "" && myDataChannel){
     myDataChannel.send(chatInput.value);
     paintChat(chatInput.value, "You");
+    }
     chatInput.value ="";
 }
 
 function paintChat(message, user){
+    const div = document.createElement("div");
+    div.classList = "chatBox";
     const li = document.createElement("li");
-    li.innerText = (user !== "alert" ) ?  `${user} : ${message}` : message;
-    chats.appendChild(li);
+    li.innerText = message;
+    chats.appendChild(div);
+    switch (user) {
+        case "You" :
+            li.classList = "you"
+            const icon = document.createElement("icon");
+            icon.classList = "youIcon"
+            icon.innerText = "You"
+            div.appendChild(li);
+            div.appendChild(icon);
+            break;
+        case "Opponent" :
+            li.classList = "opponent"
+            const icon2 = document.createElement("icon");
+            icon2.classList = "opponentIcon"
+            div.appendChild(icon2);
+            div.appendChild(li);
+            break;
+        case "alert" :
+            li.classList = "alert"
+            div.appendChild(li);
+            break;
+    }
+
     }
 
 chatForm.addEventListener("submit", handleChatSubmit);
