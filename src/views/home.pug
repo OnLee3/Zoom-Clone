@@ -11,7 +11,7 @@ html(lang="en")
         img(src="../public/img/greet2.jpg")#bg-image
         div#welcome
             h1 Chat
-            form
+            form#enter
                 button
                     i.fas.fa-video.fa-lg
                     span Enter Room
@@ -33,7 +33,7 @@ html(lang="en")
                         span Cam Change
             div#chat
                 ul#chats
-                form
+                form#sendMsg
                     input(type="text")
                     button.far.fa-paper-plane.fa-lg
         script(src="/socket.io/socket.io.js")

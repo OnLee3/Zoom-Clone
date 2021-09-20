@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
 }
+
 #stream {
   width: 70%;
   height: 100%;
@@ -13,15 +14,16 @@
   padding-bottom: 4%;
   position: relative;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
-  #wait {
-    position: absolute;
-    top: 38%;
-    left: 40%;
-    font-size: 28px;
-    font-weight: 600;
-  }
+  justify-content: space-between;
+}
+
+#wait {
+  position: absolute;
+  top: 38%;
+  left: 40%;
+  font-size: 28px;
+  font-weight: 600;
 }
 
 #chat {
@@ -35,86 +37,88 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  #chats {
-    width: 100%;
-    gap: 5px;
+}
+
+#chats {
+  width: 100%;
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  -ms-overflow-style: none; // IE에서 스크롤바 감춤
+  &::-webkit-scrollbar {
+    display: none !important; // 윈도우 크롬 등
+  }
+}
+
+.chatBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  li {
+    width: 90%;
+    height: 4vmin;
+    background-color: whitesmoke;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
-    -ms-overflow-style: none; // IE에서 스크롤바 감춤
+    border-radius: 10px;
+    overflow: scroll;
     &::-webkit-scrollbar {
       display: none !important; // 윈도우 크롬 등
     }
-    .chatBox {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 5px;
+  }
+  li.you {
+    border-radius: 20px 20px 0px 20px;
+  }
+  .youIcon,
+  .opponentIcon {
+    width: 4vmin;
+    height: 4vmin;
+    background-color: whitesmoke;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-      li {
-        width: 90%;
-        height: 4vmin;
-        background-color: whitesmoke;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        overflow: scroll;
-        &::-webkit-scrollbar {
-          display: none !important; // 윈도우 크롬 등
-        }
-      }
-      li.you {
-        border-radius: 20px 20px 0px 20px;
-      }
-      .youIcon,
-      .opponentIcon {
-        width: 4vmin;
-        height: 4vmin;
-        background-color: whitesmoke;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+  .opponentIcon {
+    background-color: black;
+  }
 
-      .opponentIcon {
-        background-color: black;
-      }
+  li.opponent {
+    border-radius: 20px 20px 20px 0px;
+  }
+}
 
-      li.opponent {
-        border-radius: 20px 20px 20px 0px;
-      }
-      li.alert {
-      }
+#sendMsg {
+  width: 100%;
+  height: 8vmin;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+  input {
+    background-color: whitesmoke;
+    width: 80%;
+    height: 4vmin;
+    border-radius: 10px;
+    text-align: center;
+    opacity: 0.8;
+    &:focus {
+      outline: none;
     }
   }
-  form {
-    width: 100%;
-    height: 8vmin;
-    background-color: whitesmoke;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 10px;
-    box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
-    input {
-      background-color: whitesmoke;
-      width: 80%;
-      height: 4vmin;
-      border-radius: 10px;
-      text-align: center;
-      &:focus {
-        outline: none;
-      }
-    }
-    button {
-      border-radius: 5px;
-      height: 4vmin;
-    }
+  button {
+    border-radius: 5px;
+    height: 4vmin;
+    cursor: pointer;
   }
 }
 
@@ -134,7 +138,7 @@
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border: 4px solid whitesmoke;
+  border: 3px solid whitesmoke;
   border-radius: 20px;
 }
 
@@ -155,6 +159,7 @@
       height: 6vmin;
       border-radius: 50%;
       margin-bottom: 5px;
+      cursor: pointer;
     }
   }
   #cameras {
@@ -169,5 +174,6 @@
     border: 1.5px solid black;
     background-color: whitesmoke;
     font-weight: bold;
+    cursor: pointer;
   }
 }

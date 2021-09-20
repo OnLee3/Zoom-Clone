@@ -6,28 +6,26 @@
     text-shadow: whitesmoke 1px 0 1px;
     margin-bottom: 20px;
   }
-  form {
+}
+
+#enter {
+  display: flex;
+  flex-direction: column;
+  button {
+    all: unset;
+    padding: 15px 20px;
+    border-radius: 20px;
+    background-color: rgb(55, 55, 255);
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
     display: flex;
-    flex-direction: column;
-    input {
-      text-align: center;
+    justify-content: space-evenly;
+    span {
+      color: whitesmoke;
     }
-    button {
-      all: unset;
-      padding: 15px 20px;
-      border-radius: 25px;
-      background-color: rgb(55, 55, 255);
-      font-size: 18px;
-      text-align: center;
-      cursor: pointer;
-      span {
-        color: whitesmoke;
-      }
-      i {
-        opacity: 0.5;
-      }
-      display: flex;
-      justify-content: space-evenly;
+    i {
+      opacity: 0.5;
     }
   }
 }
@@ -36,9 +34,6 @@
   z-index: -1;
   max-height: 100%;
   min-width: 100%;
-  height: auto;
-  width: auto;
-
   object-fit: cover;
   position: absolute;
 
