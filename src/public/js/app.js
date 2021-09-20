@@ -5,6 +5,7 @@ const muteBtn = document.getElementById("mute");
 const cameraBtn = document.getElementById("camera");
 const camerasSelect = document.getElementById("cameras");
 const call = document.getElementById("call");
+const waitAlert = document.getElementById("wait");
 
 //camerasSelect.hidden = true;
 call.hidden=true;
@@ -121,6 +122,7 @@ async function handleWelcomeSubmit(event){
 socket.on("welcome", async () => {
     if(myPeerConnection === null) makeConnection();
     paintChat("Opposite come in!","alert")
+    waitAlert.hidden = true;
     myDataChannel = myPeerConnection.createDataChannel("chat");
     myDataChannel.addEventListener("message", (message) => paintChat(message.data, "Opponent"));
     console.log("made data channel");
@@ -137,6 +139,7 @@ socket.on("answer", (answer) => {
 
 // Peer B
 socket.on("offer", async (offer) => {
+    waitAlert.hidden = true;
     myPeerConnection.addEventListener("datachannel", (event) => {
         myDataChannel = event.channel;
         myDataChannel.addEventListener("message", (message) => paintChat(message.data, "Opponent"));
@@ -159,6 +162,7 @@ socket.on("leave", (alert) => {
     myPeerConnection=null;
     myDataChannel=null;
     paintChat("Opposite exit!", "alert")
+    waitAlert.hidden = false;
 })
 
 

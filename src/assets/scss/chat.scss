@@ -15,14 +15,22 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  #wait {
+    position: absolute;
+    top: 38%;
+    left: 40%;
+    font-size: 28px;
+    font-weight: 600;
+  }
 }
+
 #chat {
   width: 30%;
   margin: 2%;
   padding: 2%;
   margin-left: 0px;
   background-color: rgb(215, 220, 233);
-  border-radius: 40px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -111,8 +119,9 @@
 }
 
 #peerFace {
-  border-radius: 40px;
-  min-height: 85%;
+  background-color: rgb(215, 220, 233);
+  border-radius: 20px;
+  min-height: 80%;
   max-height: 90%;
   min-width: 100%;
   margin-bottom: 2%;
@@ -130,9 +139,9 @@
 }
 
 #controlBox {
-  min-height: 10%;
+  min-height: 15%;
   background-color: rgb(215, 220, 233);
-  border-radius: 40px;
+  border-radius: 20px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
