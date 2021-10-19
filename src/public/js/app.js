@@ -40,11 +40,11 @@ async function getCameras(){
 
 async function getMedia(deviceId) {
     const initialConstrains = {
-        audio : false, 
+        audio : true, 
         video : {facingMode : "user" },
     }
     const cameraConstraints = {
-        audio: false,
+        audio: true,
         video:{ deviceId : { exact : deviceId } },
     }
     try {
@@ -169,21 +169,21 @@ socket.on("leave", (alert) => {
 // RTC Code
 
 function makeConnection(){
-    myPeerConnection = new RTCPeerConnection();
+    // myPeerConnection = new RTCPeerConnection();
     // STUN SERVER
-    // myPeerConnection = new RTCPeerConnection({
-    //     iceServers: [
-    //       {
-    //         urls: [
-    //           "stun:stun.l.google.com:19302",
-    //           "stun:stun1.l.google.com:19302",
-    //           "stun:stun2.l.google.com:19302",
-    //           "stun:stun3.l.google.com:19302",
-    //           "stun:stun4.l.google.com:19302",
-    //         ],
-    //       },
-    //     ],
-    //   });
+    myPeerConnection = new RTCPeerConnection({
+        iceServers: [
+          {
+            urls: [
+              "stun:stun.l.google.com:19302",
+              "stun:stun1.l.google.com:19302",
+              "stun:stun2.l.google.com:19302",
+              "stun:stun3.l.google.com:19302",
+              "stun:stun4.l.google.com:19302",
+            ],
+          },
+        ],
+      });
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
     myStream.getTracks().forEach((track) => myPeerConnection.addTrack(track, myStream));
